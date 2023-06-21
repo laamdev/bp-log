@@ -1,3 +1,3 @@
-interface UserMeasureCount {
+export interface UserMeasureCount {
   count: number
 }

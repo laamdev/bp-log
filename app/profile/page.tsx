@@ -16,7 +16,7 @@ export default async function ProfilePage() {
   const user = await currentUser()
   if (!user) return null
 
-  const userMeasuresCount: number = await getUserMeasuresCount()
+  const userMeasuresCount = await getUserMeasuresCount()
 
   return (
     <div className="container mx-auto">
@@ -53,7 +53,7 @@ export default async function ProfilePage() {
               <CardTitle>Total Measures</CardTitle>
             </CardHeader>
             <CardContent>
-              {userMeasuresCount === 0 ? "N/A" : userMeasuresCount}
+              {userMeasuresCount === 0 ? "N/A" : (userMeasuresCount as number)}
             </CardContent>
           </Card>
           <Card>
