@@ -1,6 +1,4 @@
 {
-  "name": "next-template",
-  "version": "0.0.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -14,7 +12,8 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "introspect": "drizzle-kit introspect:pg --config=drizzle.config.ts",
     "generate": "drizzle-kit generate:pg --config=drizzle.config.ts",
-    "migrate": "tsx -r dotenv/config migrate.ts"
+    "migrate": "tsx -r dotenv/config migrate.ts",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.21.7",
@@ -39,6 +38,8 @@
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "drizzle-orm": "0.26.5",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
     "lucide-react": "0.246.0",
     "next": "^13.4.6",
     "next-auth": "^4.22.1",
