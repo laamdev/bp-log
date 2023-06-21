@@ -11,7 +11,7 @@ import { TrackerWidget } from "@/components/dashboard/overview/tracker-widget"
 import { AddMeasureDialog } from "@/components/forms/add-measure-dialog"
 
 export default async function OverviewPage() {
-  const { userId } = auth()
+  const { userId } = await auth()
 
   if (!userId) throw new Error("You must sign in to access this page.")
 
