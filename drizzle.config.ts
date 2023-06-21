@@ -3,24 +3,19 @@ import type { Config } from "drizzle-kit"
 
 dotenv.config({ path: ".env.local" })
 
-// if (!process.env.DATABASE_URL) {
-//   throw new Error("DATABASE_URL is missing")
-// }
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is missing")
+}
 
 export default {
   schema: "./lib/db/schema.ts",
   out: "./drizzle/",
-  password: process.env.PGPASSWORD,
-  connectionString: process.env.DATABASE_URL,
-  host: process.env.PGHOST,
-  user: process.env.PGUSER,
-  database: process.env.PGDATABASE,
-  // // driver: "pg",
-  // // dbCredentials: {
-  // //   password: process.env.PGPASSWORD,
-  // //   connectionString: process.env.DATABASE_URL,
-  // //   host: process.env.PGHOST,
-  // //   user: process.env.PGUSER,
-  // //   database: process.env.PGDATABASE,
-  // // },
+  driver: "pg",
+  dbCredentials: {
+    connectionString: process.env.DB_URL as string,
+    password: process.env.PGPASSWORD as string,
+    host: process.env.PGHOST as string,
+    user: process.env.PGUSER as string,
+    database: process.env.PGDATABASE as string,
+  },
 } satisfies Config
