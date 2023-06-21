@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { currentUser } from "@clerk/nextjs"
+import { currentUser, SignOutButton } from "@clerk/nextjs"
 import {
   CreditCard,
   LogOut,
@@ -50,7 +50,6 @@ export const ProfileMenu = async () => {
             <DropdownMenuItem>
               <UserIcon className="mr-2 h-4 w-4" />
               <span>Profile</span>
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
           </Link>
           {/* <DropdownMenuItem>
@@ -71,8 +70,7 @@ export const ProfileMenu = async () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          <SignOutButton>Log out</SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
