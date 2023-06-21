@@ -14,7 +14,7 @@ import { UpdateProfileDialog } from "@/components/forms/update-profile-dialog"
 
 export default async function ProfilePage() {
   const user = await currentUser()
-  if (!user) return null
+  if (!user) return <div>Loading...</div>
 
   const userMeasuresCount = await getUserMeasuresCount()
 

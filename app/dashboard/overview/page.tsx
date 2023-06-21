@@ -1,16 +1,22 @@
 import React from "react"
-import { Card, Grid, Metric, Text } from "@tremor/react"
+import { auth } from "@clerk/nextjs"
+import { Grid } from "@tremor/react"
 import { format } from "date-fns"
-import { CalendarIcon, ClockIcon } from "lucide-react"
+import { ClockIcon } from "lucide-react"
 
 import { getMeasuresAsc } from "@/lib/actions/measures"
-import { Measure, measures } from "@/lib/db/schema"
+import { Measure } from "@/lib/db/schema"
 import { MeasureCard } from "@/components/dashboard/overview/measure-card"
 import { TrackerWidget } from "@/components/dashboard/overview/tracker-widget"
 import { AddMeasureDialog } from "@/components/forms/add-measure-dialog"
 
 export default async function OverviewPage() {
+  const { userId } = auth()
+
+  if (!userId) throw new Error("You must sign in to access this page.")
+
   const allMeasures = (await getMeasuresAsc()) as Measure[]
+
   if (!allMeasures || allMeasures.length === 0)
     return (
       <div>
@@ -121,229 +127,3 @@ export default async function OverviewPage() {
     </div>
   )
 }
-
-// // import {
-// //   Activity,
-// //   ArrowUpRight,
-// //   CreditCard,
-// //   DollarSignIcon,
-// //   Download,
-// //   HeartIcon,
-// //   HeartPulseIcon,
-// //   MoveDownRight,
-// //   MoveRight,
-// //   MoveUpRight,
-// //   Users,
-// // } from "lucide-react"
-
-// // import { Measure } from "@/lib/db/schema"
-// // import { getMeasures } from "@/lib/measures"
-// // import {
-// //   Card,
-// //   CardContent,
-// //   CardDescription,
-// //   CardHeader,
-// //   CardTitle,
-// // } from "@/components/ui/card"
-// // import { AddDialog } from "@/components/forms/add-dialog"
-
-// // export default async function OverviewPage() {
-// //   const allMeasures = (await getMeasures()) as Measure[]
-
-// //   if (!allMeasures) return null
-
-// //   const latestMeasure = await allMeasures[0]
-
-// //   const previousMeasure =
-// //     (await allMeasures.length) >= 2 ? allMeasures[1] : null
-
-// //   const sysDiff = (await latestMeasure?.sys) - previousMeasure?.sys!
-// //   const diaDiff = (await latestMeasure?.dia) - previousMeasure?.dia!
-
-// //   const latestPp = (await latestMeasure?.sys) - latestMeasure?.dia
-// //   const previousPp = (await previousMeasure?.sys!) - previousMeasure?.dia!
-// //   const ppDiff = (await latestPp) - previousPp
-
-// //   const pulDiff = (await latestMeasure?.pul!) - previousMeasure?.pul!
-// //   return (
-// //     <div className="flex flex-col gap-y-8">
-// //       <div className="flex items-center justify-between space-y-2">
-// //         <h2 className="text-3xl font-bold tracking-tight">Latest Reading</h2>
-// //         <AddDialog />
-// //       </div>
-
-// //       <div className="flex flex-col gap-y-2.5">
-// //         <h2>Blood Preassure</h2>
-// //         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-// //           <Card>
-// //             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-// //               <CardTitle className="text-sm font-medium">Systolic</CardTitle>
-// //               {sysDiff > 0 && <MoveUpRight className="h-4 w-4 text-red-500" />}
-// //               {sysDiff === 0 && (
-// //                 <MoveRight className="h-4 w-4 text-muted-foreground" />
-// //               )}
-// //               {sysDiff < 0 && (
-// //                 <MoveDownRight className="h-4 w-4 text-green-500" />
-// //               )}
-// //             </CardHeader>
-// //             <CardContent>
-// //               <div className="text-2xl font-bold">
-// //                 {latestMeasure ? latestMeasure?.sys : "N/A"}
-// //               </div>
-// //               {latestMeasure && allMeasures.length >= 2 ? (
-// //                 <p className="text-xs text-muted-foreground">
-// //                   {sysDiff === 0 && `No difference `}
-// //                   {sysDiff < 0 && `${sysDiff}`}
-// //                   {sysDiff > 0 && `+${sysDiff}`}
-// //                   {sysDiff === 0
-// //                     ? `from previous reading`
-// //                     : `mmHg from previous reading`}
-// //                 </p>
-// //               ) : (
-// //                 <></>
-// //               )}
-// //             </CardContent>
-// //           </Card>
-
-// //           <Card>
-// //             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-// //               <CardTitle className="text-sm font-medium">Diastolic</CardTitle>
-// //               {diaDiff > 0 && <MoveUpRight className="h-4 w-4 text-red-500" />}
-// //               {diaDiff === 0 && (
-// //                 <MoveRight className="h-4 w-4 text-muted-foreground" />
-// //               )}
-// //               {diaDiff < 0 && (
-// //                 <MoveDownRight className="h-4 w-4 text-green-500" />
-// //               )}
-// //             </CardHeader>
-// //             <CardContent>
-// //               <div className="text-2xl font-bold">
-// //                 {latestMeasure ? latestMeasure?.dia : "N/A"}
-// //               </div>
-// //               {latestMeasure && allMeasures.length >= 2 ? (
-// //                 <p className="text-xs text-muted-foreground">
-// //                   {diaDiff === 0 && `No difference `}
-// //                   {diaDiff < 0 && `${diaDiff}`}
-// //                   {diaDiff > 0 && `+${diaDiff}`}
-// //                   {diaDiff === 0
-// //                     ? `from previous reading`
-// //                     : `mmHg from previous reading`}
-// //                 </p>
-// //               ) : (
-// //                 <></>
-// //               )}
-// //             </CardContent>
-// //           </Card>
-
-// //           <Card>
-// //             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-// //               <CardTitle className="text-sm font-medium">
-// //                 Pulse Preassure
-// //               </CardTitle>
-// //               {ppDiff > 0 && <MoveUpRight className="h-4 w-4 text-red-500" />}
-// //               {ppDiff === 0 && (
-// //                 <MoveRight className="h-4 w-4 text-muted-foreground" />
-// //               )}
-// //               {ppDiff < 0 && (
-// //                 <MoveDownRight className="h-4 w-4 text-green-500" />
-// //               )}
-// //             </CardHeader>
-// //             <CardContent>
-// //               <div className="text-2xl font-bold">
-// //                 {latestPp ? latestPp : "N/A"}
-// //               </div>
-// //               {latestMeasure && allMeasures.length >= 2 ? (
-// //                 <p className="text-xs text-muted-foreground">
-// //                   {ppDiff === 0 && `No difference `}
-// //                   {ppDiff < 0 && `${ppDiff}`}
-// //                   {ppDiff > 0 && `+${ppDiff}`}
-// //                   {ppDiff === 0
-// //                     ? `from previous reading`
-// //                     : `mmHg from previous reading`}
-// //                 </p>
-// //               ) : (
-// //                 <></>
-// //               )}
-// //             </CardContent>
-// //           </Card>
-// //         </div>
-// //       </div>
-
-// //       <div className="flex flex-col gap-y-2.5">
-// //         <h2>Pulse</h2>
-// //         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-// //           <Card>
-// //             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-// //               <CardTitle className="text-sm font-medium">Heartrate</CardTitle>
-// //               {sysDiff > 0 && <MoveUpRight className="h-4 w-4 text-red-500" />}
-// //               {sysDiff === 0 && (
-// //                 <MoveRight className="h-4 w-4 text-muted-foreground" />
-// //               )}
-// //               {sysDiff < 0 && (
-// //                 <MoveDownRight className="h-4 w-4 text-green-500" />
-// //               )}
-// //             </CardHeader>
-// //             <CardContent>
-// //               <div className="text-2xl font-bold">
-// //                 {latestMeasure ? latestMeasure?.pul : "N/A"}
-// //               </div>
-
-// //               {latestMeasure && allMeasures.length >= 2 ? (
-// //                 <p className="text-xs text-muted-foreground">
-// //                   {pulDiff === 0 && `No difference `}
-// //                   {pulDiff < 0 && `${pulDiff}`}
-// //                   {pulDiff > 0 && `+${pulDiff}`}
-// //                   {pulDiff === 0
-// //                     ? `from previous reading`
-// //                     : `bpm from previous reading`}
-// //                 </p>
-// //               ) : (
-// //                 <></>
-// //               )}
-// //             </CardContent>
-// //           </Card>
-// //           <Card>
-// //             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-// //               <CardTitle className="text-sm font-medium">
-// //                 Irregular Beat?
-// //               </CardTitle>
-// //               {latestMeasure ? (
-// //                 latestMeasure?.af === true ? (
-// //                   <HeartPulseIcon className="h-4 w-4 text-red-500" />
-// //                 ) : (
-// //                   <HeartIcon className="h-4 w-4 text-green-500" />
-// //                 )
-// //               ) : (
-// //                 <></>
-// //               )}
-// //             </CardHeader>
-// //             <CardContent>
-// //               <div className="text-2xl font-bold">
-// //                 {latestMeasure
-// //                   ? latestMeasure?.af === true
-// //                     ? "Yes"
-// //                     : "No"
-// //                   : "N/A"}
-// //               </div>
-
-// //               {latestMeasure ? (
-// //                 <p className="text-xs text-muted-foreground">
-// //                   {latestMeasure?.af === previousMeasure?.af &&
-// //                     `No difference from previous reading`}
-// //                   {latestMeasure?.af === false &&
-// //                     previousMeasure?.af === true &&
-// //                     `Previous reading was irregular.`}
-// //                   {latestMeasure?.af === true &&
-// //                     previousMeasure?.af === false &&
-// //                     `Previous reading was regular.`}
-// //                 </p>
-// //               ) : (
-// //                 <></>
-// //               )}
-// //             </CardContent>
-// //           </Card>
-// //         </div>
-// //       </div>
-// //     </div>
-// //   )
-// // }
