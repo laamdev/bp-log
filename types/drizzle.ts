@@ -1,0 +1,3 @@
+interface UserMeasureCount {
+  count: number
+}

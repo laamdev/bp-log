@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1687272536813,
+      "tag": "0000_solid_sprite",
+      "breakpoints": false
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1687272572450,
+      "tag": "0001_fantastic_guardian",
+      "breakpoints": false
+    }
+  ]
+}

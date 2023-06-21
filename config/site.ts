@@ -10,6 +10,26 @@ export const siteConfig = {
       href: "/",
     },
   ],
+  privateNav: [
+    {
+      title: "Overview",
+      href: "/dashboard/overview",
+    },
+    {
+      title: "History",
+      href: "/dashboard/history",
+    },
+    {
+      title: "Medication",
+      href: "/dashboard/medication",
+    },
+  ],
+  publicNav: [
+    {
+      title: "Home",
+      href: "/",
+    },
+  ],
   links: {
     twitter: "https://twitter.com/shadcn",
     github: "https://github.com/shadcn/ui",

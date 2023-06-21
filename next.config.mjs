@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    appDir: true,
+    serverActions: true,
+  },
+  images: {
+    remotePatterns: [{ hostname: "images.clerk.dev" }],
   },
 }
 
