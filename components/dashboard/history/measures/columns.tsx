@@ -1,8 +1,20 @@
 "use client"
 
+import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
+import { MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { UpdateMeasureDialog } from "@/components/forms/update-measure-dialog"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -50,12 +62,11 @@ export const columns: ColumnDef<Measure>[] = [
                 ? "text-orange-500"
                 : sysValue >= 180
                 ? "text-red-500"
-                : "text-neutral-500"
+                : "text-zinc-500"
             )}
           >
             {sysValue}
           </span>
-          <span className="text-xs font-light">{` mmHg`}</span>
         </div>
       )
     },
@@ -81,12 +92,11 @@ export const columns: ColumnDef<Measure>[] = [
                 ? "text-orange-500"
                 : diaValue >= 110
                 ? "text-red-500"
-                : "text-neutral-500"
+                : "text-zinc-500"
             )}
           >
             {diaValue}
           </span>
-          <span className="text-xs font-light">{` mmHg`}</span>
         </div>
       )
     },
@@ -96,11 +106,7 @@ export const columns: ColumnDef<Measure>[] = [
     header: () => <div className="text-left">{`Pulse Preassure`}</div>,
     cell: ({ row }) => {
       const ppValue = row.getValue("pp") as number
-      return (
-        <div className="font-medium">
-          {ppValue} <span className="text-xs font-light">{` mmHg`}</span>
-        </div>
-      )
+      return <div className="font-medium">{ppValue}</div>
     },
   },
   {
@@ -108,11 +114,7 @@ export const columns: ColumnDef<Measure>[] = [
     header: () => <div className="text-left">{`Pulse`}</div>,
     cell: ({ row }) => {
       const pulValue = row.getValue("pul") as number
-      return (
-        <div className="font-medium">
-          {pulValue} <span className="text-xs font-light">{`bpm`}</span>
-        </div>
-      )
+      return <div className="font-medium">{pulValue}</div>
     },
   },
   {
@@ -129,6 +131,42 @@ export const columns: ColumnDef<Measure>[] = [
         >
           {afValue}
         </div>
+      )
+    },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const measure = row.original
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() =>
+                navigator.clipboard.writeText(
+                  `Date: ${measure.measureTime} | Systolic: ${measure.sys} | Diastolic: ${measure.dia} | Pulse Preassure: ${measure.pp} | Pulse: ${measure.pul} | Irregularity: ${measure.af}`
+                )
+              }
+            >
+              Copy measure
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link href={`/dashboard/measures/${measure.id}`}>
+                Edit measure
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>Delete measure</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       )
     },
   },

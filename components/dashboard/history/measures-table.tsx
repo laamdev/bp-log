@@ -23,11 +23,16 @@ async function getData(): Promise<Measure[]> {
   return measures
 }
 
-export default async function HistoryPage() {
+export const MeasuresTable = async () => {
   const data = await getData()
-
   return (
-    <div className="container mx-auto py-10">
+    <div className="mt-12">
+      <div>
+        <h2 className="text-3xl font-semibold">Measures History</h2>
+        <p className="mt-1 flex items-center gap-x-2 text-zinc-700 dark:text-zinc-300">
+          {`You have logged ${data.length} blood preassure measures.`}
+        </p>
+      </div>
       <DataTable columns={columns} data={data} />
     </div>
   )

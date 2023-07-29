@@ -1,9 +1,11 @@
-import { revalidatePath, revalidateTag } from "next/cache"
 import { auth } from "@clerk/nextjs"
-import { PlusIcon } from "lucide-react"
+import { format, parseISO } from "date-fns"
+import { CalendarIcon, PlusIcon } from "lucide-react"
 
 import { now } from "@/lib/constants"
+import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
@@ -18,7 +20,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { addMeasureAction } from "@/app/_actions"
 
-export const AddMeasureDialog = () => {
+export const UpdateMeasureDialog = () => {
   async function action(data: FormData) {
     "use server"
     const userid = await auth().userId!
@@ -30,7 +32,6 @@ export const AddMeasureDialog = () => {
     const af = afString === "on" ? true : false
     const measureTime = data.get("measureTime")
     const userId = userid
-
     await addMeasureAction({
       sys: sys,
       dia: dia,
@@ -40,8 +41,6 @@ export const AddMeasureDialog = () => {
       userId: userId,
       measureTime: measureTime as string,
     })
-
-    revalidateTag("/dashboard/overview")
   }
   return (
     <Dialog>

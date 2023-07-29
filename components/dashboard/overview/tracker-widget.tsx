@@ -37,15 +37,15 @@ export const TrackerWidget = ({ measures }: { measures: any }) => {
     color:
       measures[index - 1]?.sys - measure.sys > 0 &&
       measures[index - 1]?.sys - measure.sys < 10
-        ? "yellow"
-        : measures[index - 1]?.sys - measure.sys >= 10
         ? "green"
+        : measures[index - 1]?.sys - measure.sys >= 10
+        ? "blue"
         : measures[index - 1]?.sys - measure.sys < 0 &&
           measures[index - 1]?.sys - measure.sys > -10
         ? "orange"
         : measures[index - 1]?.sys - measure.sys <= -10
         ? "red"
-        : "gray",
+        : "yellow",
     tooltip: (
       <div>
         <div>
@@ -67,15 +67,15 @@ export const TrackerWidget = ({ measures }: { measures: any }) => {
     color:
       measures[index - 1]?.dia - measure.dia > 0 &&
       measures[index - 1]?.dia - measure.dia < 10
-        ? "yellow"
-        : measures[index - 1]?.dia - measure.dia >= 10
         ? "green"
+        : measures[index - 1]?.dia - measure.dia >= 10
+        ? "blue"
         : measures[index - 1]?.dia - measure.dia < 0 &&
           measures[index - 1]?.dia - measure.dia > -10
         ? "orange"
         : measures[index - 1]?.dia - measure.dia <= -10
         ? "red"
-        : "gray",
+        : "yellow",
     tooltip: (
       <div>
         <div>
@@ -99,15 +99,15 @@ export const TrackerWidget = ({ measures }: { measures: any }) => {
     color:
       measures[index - 1]?.pul - measure.pul > 0 &&
       measures[index - 1]?.pul - measure.pul < 10
-        ? "yellow"
-        : measures[index - 1]?.pul - measure.pul >= 10
         ? "green"
+        : measures[index - 1]?.pul - measure.pul >= 10
+        ? "blue"
         : measures[index - 1]?.pul - measure.pul < 0 &&
           measures[index - 1]?.pul - measure.pul > -10
         ? "orange"
         : measures[index - 1]?.pul - measure.pul <= -10
         ? "red"
-        : "gray",
+        : "yellow",
     tooltip: (
       <div>
         <div>
@@ -169,13 +169,17 @@ export const TrackerWidget = ({ measures }: { measures: any }) => {
             <Flex justifyContent="end" className="-mr-2 -space-x-2">
               {item.title !== "Irregular Beat" ? (
                 <>
-                  <Icon icon={MoveDownIcon} color="green" tooltip="Decrease" />
+                  <Icon icon={MoveDownIcon} color="blue" tooltip="Decrease" />
                   <Icon
                     icon={MoveDownRightIcon}
-                    color="yellow"
+                    color="green"
                     tooltip="Moderate Decrease"
                   />
-                  <Icon icon={MoveRightIcon} color="gray" tooltip="Unchanged" />
+                  <Icon
+                    icon={MoveRightIcon}
+                    color="yellow"
+                    tooltip="Unchanged"
+                  />
                   <Icon
                     icon={MoveUpRightIcon}
                     color="orange"

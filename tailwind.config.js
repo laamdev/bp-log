@@ -1,8 +1,7 @@
-const { fontFamily } = require("tailwindcss/defaultTheme")
-
 /** @type {import('tailwindcss').Config} */
 /* eslint-disable max-len */
 module.exports = {
+  darkMode: ["class"],
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -57,60 +56,60 @@ module.exports = {
         // light mode
         tremor: {
           brand: {
-            faint: "#eff6ff", // blue-50
-            muted: "#bfdbfe", // blue-200
-            subtle: "#60a5fa", // blue-400
-            DEFAULT: "#3b82f6", // blue-500
-            emphasis: "#1d4ed8", // blue-700
+            faint: "#fdf4ff", // fuchsia-50
+            muted: "#f5d0fe", // fuchsia-200
+            subtle: "#e879f9", // fuchsia-400
+            DEFAULT: "#d946ef", // fuchsia-500
+            emphasis: "#a21caf", // fuchsia-700
             inverted: "#ffffff", // white
           },
           background: {
-            muted: "#f9fafb", // gray-50
-            subtle: "#f3f4f6", // gray-100
+            muted: "#fafafa", // zinc-50
+            subtle: "#f4f4f5", // zinc-100
             DEFAULT: "#ffffff", // white
-            emphasis: "#374151", // gray-700
+            emphasis: "#3f3f46", // zinc-700
           },
           border: {
-            DEFAULT: "#e5e7eb", // gray-200
+            DEFAULT: "#e4e4e7", // zinc-200
           },
           ring: {
-            DEFAULT: "#e5e7eb", // gray-200
+            DEFAULT: "#e4e4e7", // zinc-200
           },
           content: {
-            subtle: "#9ca3af", // gray-400
-            DEFAULT: "#6b7280", // gray-500
-            emphasis: "#374151", // gray-700
-            strong: "#111827", // gray-900
+            subtle: "#a1a1aa", // zinc-400
+            DEFAULT: "#71717a", // zinc-500
+            emphasis: "#3f3f46", // zinc-700
+            strong: "#18181b", // zinc-900
             inverted: "#ffffff", // white
           },
         },
         // dark mode
         "dark-tremor": {
           brand: {
-            faint: "#0B1229", // custom
-            muted: "#172554", // blue-950
-            subtle: "#1e40af", // blue-800
-            DEFAULT: "#3b82f6", // blue-500
-            emphasis: "#60a5fa", // blue-400
-            inverted: "#030712", // gray-950
+            faint: "#0B1229", //! custom
+            muted: "#4a044e", // fuchsia-950
+            subtle: "#86198f", // fuchsia-800
+            DEFAULT: "#d946ef", // fuchsia-500
+            emphasis: "#f472b6", // fuchsia-400
+            inverted: "#09090b", // zinc-950
           },
           background: {
-            muted: "#131A2B", // custom
-            subtle: "#1f2937", // gray-800
-            DEFAULT: "#111827", // gray-900
-            emphasis: "#d1d5db", // gray-300
+            muted: "#131A2B", //! custom
+            subtle: "#27272a", // zinc-800
+            DEFAULT: "#18181b", // zinc-900
+            emphasis: "#d1d5db", // zinc-300
           },
           border: {
-            DEFAULT: "#1f2937", // gray-800
+            DEFAULT: "#27272a", // zinc-800
           },
           ring: {
-            DEFAULT: "#1f2937", // gray-800
+            DEFAULT: "#27272a", // zinc-800
           },
           content: {
-            subtle: "#4b5563", // gray-600
-            DEFAULT: "#6b7280", // gray-600
-            emphasis: "#e5e7eb", // gray-200
-            strong: "#f9fafb", // gray-50
+            subtle: "#52525b", // zinc-600
+            DEFAULT: "#71717a", // zinc-500
+            emphasis: "#e4e4e7", // zinc-200
+            strong: "#fafafa", // zinc-50
             inverted: "#000000", // black
           },
         },
@@ -130,21 +129,18 @@ module.exports = {
           "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
       },
       borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
         "tremor-small": "0.375rem",
         "tremor-default": "0.5rem",
         "tremor-full": "9999px",
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
-        sm: "calc(var(--radius) - 4px)",
       },
       fontSize: {
         "tremor-label": ["0.75rem"],
         "tremor-default": ["0.875rem", { lineHeight: "1.25rem" }],
         "tremor-title": ["1.125rem", { lineHeight: "1.75rem" }],
         "tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
-      },
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {

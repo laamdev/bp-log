@@ -1,27 +1,19 @@
-import { revalidatePath, revalidateTag } from "next/cache"
+import { redirect } from "next/navigation"
 import { auth } from "@clerk/nextjs"
-import { PlusIcon } from "lucide-react"
 
 import { now } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { addMeasureAction } from "@/app/_actions"
 
-export const AddMeasureDialog = () => {
+export default function AddMeasure() {
   async function action(data: FormData) {
     "use server"
     const userid = await auth().userId!
+
     const sys = +data.get("sys")!
     const dia = +data.get("dia")!
     const pul = +data.get("pul")!
@@ -41,24 +33,18 @@ export const AddMeasureDialog = () => {
       measureTime: measureTime as string,
     })
 
-    revalidateTag("/dashboard/overview")
+    redirect("/dashboard/overview")
   }
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">
-          <PlusIcon className="mr-2 h-4 w-4" />
-          <span>{`New measure`}</span>
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add a new reading</DialogTitle>
-          <DialogDescription>
-            Input the readings of your blood preassure machine.
-          </DialogDescription>
-        </DialogHeader>
+    <section className="mx-auto max-w-lg">
+      <div>
+        <h2 className="text-3xl font-semibold">Add a new reading</h2>
+        <p className="mt-1 flex items-center gap-x-2">
+          Input the readings of your blood preassure machine
+        </p>
+      </div>
 
+      <Card className="mt-12 p-6">
         <form action={action}>
           <div className="grid grid-cols-3 gap-5">
             <div className="grid gap-y-2.5">
@@ -100,36 +86,41 @@ export const AddMeasureDialog = () => {
                 defaultValue={now.slice(0, 16)} // // // placeholder="Diastolic"
               />
             </div>
-            <div className="col-span-3 flex items-center gap-x-2.5">
+
+            <div className="col-span-1 flex items-center gap-x-2.5">
               <Checkbox id="af" name="af" />
               <Label htmlFor="af">Irregular pulse?</Label>
             </div>
           </div>
-          <DialogFooter>
-            <Button type="submit" className="mt-10">
-              Submit
-            </Button>
-          </DialogFooter>
-        </form>
+          {/* <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div className="col-span-1 flex flex-col gap-y-2.5">
+              <Label>Measurement Method</Label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a device and a location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Arm Cuff</SelectLabel>
+                    <SelectItem value="arm-left">Left Arm</SelectItem>
+                    <SelectItem value="arm-right">Right Arm</SelectItem>
+                  </SelectGroup>
+                  <SelectGroup>
+                    <SelectLabel>Wrist Cuff</SelectLabel>
+                    <SelectItem value="wrist-left">Left Wrist</SelectItem>
+                    <SelectItem value="wrist-right">Right Wrist</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          
+          </div> */}
 
-        {/* <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter> */}
-      </DialogContent>
-    </Dialog>
+          <Button type="submit" className="mt-10">
+            Submit
+          </Button>
+        </form>
+      </Card>
+    </section>
   )
 }

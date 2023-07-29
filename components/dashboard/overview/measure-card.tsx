@@ -22,7 +22,7 @@ export const MeasureCard = ({
   measureLength: number
 }) => {
   return (
-    <Card className="max-w-sm">
+    <Card>
       <Flex justifyContent="between" alignItems="center">
         <Text>{label}</Text>
         {measureLength >= 2 && (

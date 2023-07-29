@@ -2,9 +2,11 @@ import Link from "next/link"
 import { currentUser, SignOutButton } from "@clerk/nextjs"
 import {
   CreditCard,
+  LineChartIcon,
   LogOut,
   PlusCircle,
   Settings,
+  Table2Icon,
   UserIcon,
 } from "lucide-react"
 
@@ -46,6 +48,20 @@ export const ProfileMenu = async () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <Link href="/dashboard/overview">
+            <DropdownMenuItem>
+              <LineChartIcon className="mr-2 h-4 w-4" />
+              <span>Dashboard</span>
+            </DropdownMenuItem>
+          </Link>
+          {/* <Link href="/dashboard/history">
+            <DropdownMenuItem>
+              <Table2Icon className="mr-2 h-4 w-4" />
+              <span>History</span>
+            </DropdownMenuItem> 
+          </Link>
+          {/* <DropdownMenuSeparator /> */}
+
           <Link href="/profile">
             <DropdownMenuItem>
               <UserIcon className="mr-2 h-4 w-4" />

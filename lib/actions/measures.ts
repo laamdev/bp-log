@@ -3,7 +3,7 @@
 import { auth } from "@clerk/nextjs"
 import { asc, desc, eq, sql } from "drizzle-orm"
 
-import { UserMeasureCount } from "@/types/drizzle"
+import { UpdatedMeasure, UserMeasureCount } from "@/types/drizzle"
 import { db } from "@/lib/db"
 import { Measure, measures, NewMeasure } from "@/lib/db/schema"
 
@@ -35,9 +35,32 @@ export async function getMeasuresAsc() {
   }
 }
 
+export async function getMeasureById(measureId: number) {
+  try {
+    const measure: Measure[] = await db
+      .select()
+      .from(measures)
+      .where(eq(measures.id, measureId))
+    return measure[0]
+  } catch (error) {
+    return error
+  }
+}
+
 export async function addMeasure(newMeasure: NewMeasure) {
   try {
     const measure = db.insert(measures).values(newMeasure)
+    return measure
+  } catch (error) {
+    return { error }
+  }
+}
+export async function updateMeasure(editedMeasure: UpdatedMeasure) {
+  try {
+    const measure = db
+      .update(measures)
+      .set(editedMeasure)
+      .where(eq(measures.id, editedMeasure.id))
     return measure
   } catch (error) {
     return { error }
