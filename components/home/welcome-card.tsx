@@ -16,7 +16,7 @@ export const WelcomeCard = () => {
   return (
     <Card className="mx-auto max-w-md">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl">BP Log</CardTitle>
+        <CardTitle className="text-2xl uppercase">BP Log</CardTitle>
         <CardDescription>
           <SignedOut>
             Sing up or log in to keep a log of your daily blood preassure
