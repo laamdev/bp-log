@@ -1,116 +1,43 @@
-import { revalidatePath, revalidateTag } from "next/cache"
-import { auth } from "@clerk/nextjs"
+"use client"
+
+import { useState } from "react"
 import { PlusIcon } from "lucide-react"
 
-import { now } from "@/lib/constants"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { addMeasureAction } from "@/app/_actions"
+import { AddMeasureForm } from "@/components/forms/add-measure-form"
+import { deleteMedication } from "@/app/_actions"
 
-export const AddMeasureDialog = () => {
-  async function action(data: FormData) {
-    "use server"
-    const userid = await auth().userId!
-    const sys = +data.get("sys")!
-    const dia = +data.get("dia")!
-    const pul = +data.get("pul")!
-    const pp = sys - dia
-    const afString = data.get("af")!
-    const af = afString === "on" ? true : false
-    const measureTime = data.get("measureTime")
-    const userId = userid
+export const AddMeasureDialog = ({ addMeasureMutation }: any) => {
+  const [open, setOpen] = useState(false)
 
-    await addMeasureAction({
-      sys: sys,
-      dia: dia,
-      pul: pul,
-      pp: pp,
-      af: af,
-      userId: userId,
-      measureTime: measureTime as string,
-    })
-
-    revalidateTag("/dashboard/overview")
-  }
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="default">
           <PlusIcon className="mr-2 h-4 w-4" />
-          <span>{`New measure`}</span>
+          <span>{`New Measure`}</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Add a new reading</DialogTitle>
+          <DialogTitle>Add a new measure</DialogTitle>
           <DialogDescription>
-            Input the readings of your blood preassure machine.
+            Input the details of your blood preassure reading.
           </DialogDescription>
         </DialogHeader>
 
-        <form action={action}>
-          <div className="grid grid-cols-3 gap-5">
-            <div className="grid gap-y-2.5">
-              <Label htmlFor="sys">Systolic</Label>
-              <Input
-                type="number"
-                name="sys"
-                id="sys"
-                defaultValue={120}
-                // // // placeholder="Diastolic"
-              />
-            </div>
-            <div className="grid gap-y-2.5">
-              <Label htmlFor="dia">Diastolic</Label>
-              <Input
-                type="number"
-                name="dia"
-                id="dia"
-                defaultValue={80}
-                // // // placeholder="Diastolic"
-              />
-            </div>
-            <div className="grid gap-y-2.5">
-              <Label htmlFor="pul">BPM</Label>
-              <Input
-                type="number"
-                name="pul"
-                id="pul"
-                // // // placeholder="Diastolic"
-                defaultValue={75}
-              />
-            </div>
-            <div className="col-span-3 grid gap-y-2.5">
-              <Label htmlFor="time">Date and time</Label>
-              <Input
-                type="datetime-local"
-                name="measureTime"
-                id="measureTime"
-                defaultValue={now.slice(0, 16)} // // // placeholder="Diastolic"
-              />
-            </div>
-            <div className="col-span-3 flex items-center gap-x-2.5">
-              <Checkbox id="af" name="af" />
-              <Label htmlFor="af">Irregular pulse?</Label>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="submit" className="mt-10">
-              Submit
-            </Button>
-          </DialogFooter>
-        </form>
+        <AddMeasureForm
+          addMeasureMutation={addMeasureMutation}
+          setOpen={setOpen}
+        />
 
         {/* <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">

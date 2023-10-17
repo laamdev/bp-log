@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react"
 import { Edit3Icon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -11,15 +14,28 @@ import {
 } from "@/components/ui/dialog"
 import { UpdateProfileForm } from "@/components/forms/update-profile-form"
 
-export const UpdateProfileDialog = async () => {
+export const UpdateProfileDialog = ({
+  birthday,
+  sex,
+  weight,
+  height,
+}: {
+  birthday: string
+  sex: string
+  weight: number
+  height: number
+}) => {
+  const [open, setOpen] = useState(false)
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">
+        <Button variant="default">
           <Edit3Icon className="mr-2 h-4 w-4" />
-          <span className="hidden sm:block">{`Edit profile`}</span>
+          <span>{`Edit profile`}</span>
         </Button>
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Edit profile</DialogTitle>
@@ -28,7 +44,13 @@ export const UpdateProfileDialog = async () => {
           </DialogDescription>
         </DialogHeader>
 
-        <UpdateProfileForm />
+        <UpdateProfileForm
+          setOpen={setOpen}
+          birthday={birthday}
+          sex={sex}
+          weight={weight}
+          height={height}
+        />
       </DialogContent>
     </Dialog>
   )

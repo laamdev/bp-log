@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "df28abae-b20a-4ea9-9b0d-d98135bc1d36",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "12fa635a-055b-4625-8ef1-421a4301fb3a",
+  "prevId": "2c3c7feb-042a-4677-838b-6018da2e910e",
   "tables": {
     "measures": {
       "name": "measures",
@@ -57,6 +57,18 @@
           "notNull": false,
           "default": "now()"
         },
+        "cuffLocation": {
+          "name": "cuffLocation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bodyPosition": {
+          "name": "bodyPosition",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp with time zone",
@@ -67,7 +79,48 @@
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {}
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "medications": {
+      "name": "medications",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dose": {
+          "name": "dose",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "time": {
+          "name": "time",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     }
   },
   "enums": {},

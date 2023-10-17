@@ -1,12 +1,10 @@
 import Link from "next/link"
 import { currentUser, SignOutButton } from "@clerk/nextjs"
 import {
-  CreditCard,
   LineChartIcon,
+  ListIcon,
   LogOut,
-  PlusCircle,
-  Settings,
-  Table2Icon,
+  PillIcon,
   UserIcon,
 } from "lucide-react"
 
@@ -19,19 +17,27 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
 export const ProfileMenu = async () => {
   const user = await currentUser()
+
+  if (!user) return <div>Not logged in</div>
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user?.profileImageUrl} alt="@shadcn" />
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarImage
+              src={user?.imageUrl ?? ""}
+              alt={`${user?.firstName} ${user?.lastName}`}
+            />
+            <AvatarFallback>
+              {user?.firstName?.split("")[0]}
+              {user?.lastName?.split("")[0]}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -39,54 +45,56 @@ export const ProfileMenu = async () => {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {user?.firstName}
+              {user?.firstName} {user?.lastName}
             </p>
-            <p className="text-xs leading-none text-muted-foreground">
+            <p className="text-xs leading-none opacity-50">
               {user?.emailAddresses[0].emailAddress}
             </p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+
         <DropdownMenuGroup>
           <Link href="/dashboard/overview">
             <DropdownMenuItem>
               <LineChartIcon className="mr-2 h-4 w-4" />
-              <span>Dashboard</span>
+              <span>Overview</span>
             </DropdownMenuItem>
           </Link>
-          {/* <Link href="/dashboard/history">
+          <Link href="/dashboard/history">
             <DropdownMenuItem>
-              <Table2Icon className="mr-2 h-4 w-4" />
+              <ListIcon className="mr-2 h-4 w-4" />
               <span>History</span>
-            </DropdownMenuItem> 
+            </DropdownMenuItem>
           </Link>
-          {/* <DropdownMenuSeparator /> */}
+          <Link href="/dashboard/medication">
+            <DropdownMenuItem>
+              <PillIcon className="mr-2 h-4 w-4" />
+              <span>Medication</span>
+            </DropdownMenuItem>
+          </Link>
+        </DropdownMenuGroup>
 
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup>
           <Link href="/profile">
             <DropdownMenuItem>
               <UserIcon className="mr-2 h-4 w-4" />
               <span>Profile</span>
             </DropdownMenuItem>
           </Link>
-          {/* <DropdownMenuItem>
-            <CreditCard className="mr-2 h-4 w-4" />
-            <span>Billing</span>
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem> */}
-          {/* <DropdownMenuItem>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            <span>New Team</span>
-          </DropdownMenuItem> */}
         </DropdownMenuGroup>
+
         <DropdownMenuSeparator />
+
         <DropdownMenuItem>
-          <LogOut className="mr-2 h-4 w-4" />
-          <SignOutButton>Log out</SignOutButton>
+          <SignOutButton>
+            <div className="flex items-center gap-x-2">
+              <LogOut className="h-4 w-4" />
+              <span>Log out</span>
+            </div>
+          </SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

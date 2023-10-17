@@ -1,16 +1,15 @@
 import { SignIn } from "@clerk/nextjs"
 
-export default function Page() {
+export default function SignInPage() {
   return (
-    <div className="grid h-[calc(100vh-4rem)] place-content-center place-items-center">
-      <SignIn
-        appearance={{
-          elements: {
-            formButtonPrimary:
-              "bg-primary text-primary-foreground hover:bg-primary/90",
-          },
-        }}
-      />
-    </div>
+    <SignIn
+      appearance={{
+        elements: {
+          formButtonPrimary:
+            "bg-primary text-primary-foreground hover:bg-primary/90",
+        },
+      }}
+      redirectUrl="/dashboard/overview"
+    />
   )
 }

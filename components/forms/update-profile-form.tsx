@@ -1,92 +1,119 @@
-import { auth, currentUser } from "@clerk/nextjs"
+"use client"
+
+// // import { currentUser } from "@clerk/nextjs"
+import { useEffect } from "react"
+import {
+  // @ts-expect-error
+  experimental_useFormState as useFormState,
+  // @ts-expect-error
+  experimental_useFormStatus as useFormStatus,
+} from "react-dom"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-// // import { zodResolver } from "@hookform/resolvers/zod"
-// // import * as z from "zod"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-// // import { toast } from "@/components/ui/use-toast"
-import { updateProfileAction } from "@/app/_actions"
+import { useToast } from "@/components/ui/use-toast"
+import { SexRadio } from "@/components/profile/sex-radio"
+import { updateProfile } from "@/app/_actions"
 
-// // const validationSchema = z.object({
-// //   sex: z.enum(["male", "female"], {
-// //     required_error: "You need to pick a sex.",
-// //   }),
-// //   age: z
-// //     .number({
-// //       required_error: "You need to input your age.",
-// //     })
-// //     .min(1, {
-// //       message: "You must be at least 1 year old.",
-// //     })
-// //     .max(100, {
-// //       message: "You must be at least 100 years old.",
-// //     }),
-// // })
+const initialState = {
+  birthday: null,
+  weight: null,
+  height: null,
+  sex: null,
+}
 
-// // type FormValues = z.infer<typeof validationSchema>
+export const UpdateProfileForm = ({
+  setOpen,
+  birthday,
+  sex,
+  weight,
+  height,
+}: {
+  setOpen: any
+  birthday: string
+  sex: string
+  weight: number
+  height: number
+}) => {
+  const { toast } = useToast()
+  const { pending } = useFormStatus()
+  const [state, formAction] = useFormState(updateProfile, initialState)
 
-export const UpdateProfileForm = async () => {
-  async function action(formData: FormData) {
-    "use server"
-    const { userId } = await auth()
+  useEffect(() => {
+    if (state.error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: state.error,
+      })
+    } else if (state.message) {
+      toast({
+        title: "Success!",
+        description: state.message,
+      })
 
-    if (!userId) {
-      throw new Error("You must be signed in to add an item to your cart")
+      setOpen(false)
+    } else {
+      return
     }
+  }, [state])
 
-    const birthday = formData.get("birthday")!
-    const sex = formData.get("sex")!
-
-    await updateProfileAction({
-      birthday: birthday,
-      sex: sex,
-      userId: userId,
-    })
-  }
-
-  const user = await currentUser()
+  // // // In case the user signs out while on the page.
+  // // if (!isLoaded || !userId) {
+  // //   return null
+  // // }
 
   return (
-    <form action={action}>
-      <div className="grid grid-cols-3 gap-5">
-        <div className="col-span-3 grid gap-y-2.5">
-          <Label htmlFor="birthday">Birthday</Label>
+    <form action={formAction}>
+      <div className="mt-8 grid grid-cols-2 gap-5">
+        <div className="col-span-2 grid gap-y-2">
+          <Label htmlFor="birthday">Age</Label>
           <Input
             type="date"
             name="birthday"
             id="birthday"
-            defaultValue={
-              !user?.publicMetadata.birthday
-                ? new Date().toISOString().substring(0, 10)
-                : (user.publicMetadata.birthday as string)
-            }
+            defaultValue={birthday ?? new Date().toISOString().substring(0, 10)}
           />
         </div>
-
-        <RadioGroup
-          defaultValue={
-            !user?.publicMetadata.sex
-              ? "male"
-              : (user.publicMetadata.sex as string)
-          }
-          id="sex"
-          name="sex"
-        >
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="male" id="male" />
-            <Label htmlFor="male">Male</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="female" id="female" />
-            <Label htmlFor="female">Female</Label>
-          </div>
-        </RadioGroup>
+        <div className="col-span-1 grid gap-y-2">
+          <Label htmlFor="weight">Weight</Label>
+          <Input
+            type="number"
+            name="weight"
+            id="weight"
+            defaultValue={weight as number}
+          />
+        </div>
+        <div className="col-span-1 grid gap-y-2">
+          <Label htmlFor="height">Height</Label>
+          <Input
+            type="number"
+            name="height"
+            id="height"
+            defaultValue={height as number}
+          />
+        </div>
+        <div className="col-span-1 grid gap-y-2">
+          <SexRadio defaultValue={(sex as string) ?? "male"} />
+        </div>
+        {/* <div className="col-span-1 grid gap-y-2">
+          <Label htmlFor="height">Sex</Label>
+          <Input
+            type="number"
+            name="height"
+            id="height"
+            defaultValue={height as number}
+          />
+        </div> */}
       </div>
-      <Button type="submit" className="mt-10">
-        Submit
+      <Button type="submit" className="mt-8" aria-disabled={pending}>
+        Edit
       </Button>
+
+      <p aria-live="polite" className="sr-only" role="status">
+        {state?.error}
+      </p>
     </form>
   )
 }

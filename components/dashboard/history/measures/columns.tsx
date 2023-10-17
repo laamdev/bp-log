@@ -1,11 +1,14 @@
 "use client"
 
+import { startTransition } from "react"
 import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
+import { format, parseISO } from "date-fns"
+import { ArrowUpDown, MoreHorizontalIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,10 +17,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { UpdateMeasureDialog } from "@/components/forms/update-measure-dialog"
+import { deleteMeasure } from "@/app/_actions"
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Measure = {
   id: string
   measureTime: string
@@ -31,12 +32,48 @@ export type Measure = {
 
 export const columns: ColumnDef<Measure>[] = [
   {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={table.getIsAllPageRowsSelected()}
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
     accessorKey: "measureTime",
-    header: "Date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => {
+      const measureTimeValue = row.getValue("measureTime") as string
+
+      return (
+        <div>{format(parseISO(measureTimeValue), "MMM dd 'at' h:mma")}</div>
+      )
+    },
   },
   {
     accessorKey: "sys",
-    header: () => <div className="text-left">{`Systolic`}</div>,
+    header: () => <div className="text-left">{`Sys`}</div>,
     cell: ({ row }) => {
       // // const amount = parseFloat(row.getValue("amount"))
       // // const formatted = new Intl.NumberFormat("en-US", {
@@ -73,7 +110,7 @@ export const columns: ColumnDef<Measure>[] = [
   },
   {
     accessorKey: "dia",
-    header: () => <div className="text-left">{`Diastolic`}</div>,
+    header: () => <div className="text-left">{`Dia`}</div>,
     cell: ({ row }) => {
       const diaValue = row.getValue("dia") as number
       return (
@@ -103,7 +140,7 @@ export const columns: ColumnDef<Measure>[] = [
   },
   {
     accessorKey: "pp",
-    header: () => <div className="text-left">{`Pulse Preassure`}</div>,
+    header: () => <div className="text-left">{`PP`}</div>,
     cell: ({ row }) => {
       const ppValue = row.getValue("pp") as number
       return <div className="font-medium">{ppValue}</div>
@@ -119,7 +156,7 @@ export const columns: ColumnDef<Measure>[] = [
   },
   {
     accessorKey: "af",
-    header: () => <div className="text-left">{`Irregular beat`}</div>,
+    header: () => <div className="text-left">{`AF`}</div>,
     cell: ({ row }) => {
       const afValue = row.getValue("af") as string
       return (
@@ -129,7 +166,7 @@ export const columns: ColumnDef<Measure>[] = [
             afValue === "Yes" ? "text-red-500" : "text-green-500"
           )}
         >
-          {afValue}
+          {afValue ? "Yes" : "No"}
         </div>
       )
     },
@@ -142,9 +179,9 @@ export const columns: ColumnDef<Measure>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button size="icon" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontalIcon className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -160,11 +197,20 @@ export const columns: ColumnDef<Measure>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/measures/${measure.id}`}>
+              <Link href={`/dashboard/history/${measure.id}`}>
                 Edit measure
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>Delete measure</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                startTransition(() => {
+                  deleteMeasure(measure.id)
+                  // setOpen(false)
+                })
+              }}
+            >
+              Delete measure
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )

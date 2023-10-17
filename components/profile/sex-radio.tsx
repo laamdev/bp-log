@@ -1,12 +1,17 @@
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
-export function SexRadio() {
+export const SexRadio = ({ defaultValue }: { defaultValue?: string }) => {
   return (
     <div>
       <Label htmlFor="sex">Sex</Label>
 
-      <RadioGroup defaultValue="male">
+      <RadioGroup
+        defaultValue={defaultValue}
+        name="sex"
+        id="sex"
+        className="mt-2 flex"
+      >
         <div className="flex items-center space-x-2">
           <RadioGroupItem value="male" id="male" />
           <Label htmlFor="male">Male</Label>

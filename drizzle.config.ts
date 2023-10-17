@@ -9,13 +9,10 @@ if (!process.env.DATABASE_URL) {
 
 export default {
   schema: "./lib/db/schema.ts",
-  out: "./drizzle/",
+  out: "./drizzle",
   driver: "pg",
   dbCredentials: {
-    connectionString: process.env.DB_URL as string,
-    password: process.env.PGPASSWORD as string,
-    host: process.env.PGHOST as string,
-    user: process.env.PGUSER as string,
-    database: process.env.PGDATABASE as string,
+    connectionString: process.env.DATABASE_URL as string,
   },
+  breakpoints: true,
 } satisfies Config

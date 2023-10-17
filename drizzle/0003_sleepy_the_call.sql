@@ -1,0 +1,1 @@
+ALTER TABLE "medications" ALTER COLUMN "unit" SET DATA TYPE text;

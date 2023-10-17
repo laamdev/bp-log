@@ -1,15 +1,13 @@
-import "./globals.css"
+import "@/app/globals.css"
 
+import { ReactNode } from "react"
 import { Metadata } from "next"
-import { ClerkProvider } from "@clerk/nextjs"
 
 import { siteConfig } from "@/config/site"
-import { fontMono, fontSans } from "@/lib/fonts"
+import { telefraf } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
-import { Toaster } from "@/components/ui/toaster"
 import { SiteHeader } from "@/components/site-header"
-import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
+import { Providers } from "@/app/providers"
 
 export const metadata: Metadata = {
   title: {
@@ -29,31 +27,28 @@ export const metadata: Metadata = {
 }
 
 interface RootLayoutProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            fontSans.variable,
-            fontMono.variable
-          )}
-        >
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <div className="flex-1 px-6 py-8">{children}</div>
-            </div>
-            <TailwindIndicator />
-            <Toaster />
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(telefraf.variable, "font-sans")}
+    >
+      <body>
+        <Providers>
+          <div
+            className={cn(
+              "bg-background relative mx-auto flex min-h-screen max-w-5xl flex-col p-4 antialiased"
+            )}
+          >
+            <SiteHeader />
+            <div className="flex-1 py-8">{children}</div>
+          </div>
+        </Providers>
+      </body>
+    </html>
   )
 }
