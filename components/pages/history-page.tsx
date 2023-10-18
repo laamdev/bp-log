@@ -7,8 +7,6 @@ import { userMeasuresEndpoint as cacheKey, getAllUserMeasures } from "@/lib/api"
 import { columns } from "@/components/dashboard/history/measures/columns"
 import { DataTable } from "@/components/dashboard/history/measures/data-table"
 
-preload(cacheKey, getAllUserMeasures)
-
 export const HistoryPage = () => {
   const {
     isLoading,
