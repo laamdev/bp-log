@@ -14,55 +14,55 @@ import { useToast } from "@/components/ui/use-toast"
 import { LatestMeasure } from "@/components/dashboard/overview/latest-measure"
 import { RecentMeasures } from "@/components/dashboard/overview/recent-measures"
 
-preload(cacheKey, getAllUserMeasures)
+// // preload(cacheKey, getAllUserMeasures)
 
 export const OverviewPage = () => {
-  const {
-    isLoading,
-    data: allUserMeasures,
-    error,
-    mutate,
-  } = useSWR(cacheKey, getAllUserMeasures, {
-    // // onSuccess: (data) => data.sort((a, b) => a.measureTime - b.measureTime),
-  })
+  // // const {
+  // //   isLoading,
+  // //   data: allUserMeasures,
+  // //   error,
+  // //   mutate,
+  // // } = useSWR(cacheKey, getAllUserMeasures, {
+  // //   onSuccess: (data) => data.sort((a, b) => a.measureTime - b.measureTime),
+  // // })
 
   const { toast } = useToast()
 
   // // if (isLoading) return <OverviewPageSkeleton />
-  if (isLoading)
-    return (
-      <div className="flex items-center justify-center">
-        <Loader2Icon className="bg-primary text-primary-foreground h-8 w-8 animate-spin rounded-full p-1" />
-      </div>
-    )
-  if (error) return <div>{error.message}</div>
+  // // if (isLoading)
+  // //   return (
+  // //     <div className="flex items-center justify-center">
+  // //       <Loader2Icon className="bg-primary text-primary-foreground h-8 w-8 animate-spin rounded-full p-1" />
+  // //     </div>
+  // //   )
+  // // if (error) return <div>{error.message}</div>
 
-  const addMeasureMutation = async (newMeasure: Measure) => {
-    try {
-      await mutate(
-        addMeasure(newMeasure, allUserMeasures),
-        addMeasureOptions(newMeasure, allUserMeasures)
-      )
+  // // const addMeasureMutation = async (newMeasure: Measure) => {
+  // //   try {
+  // //     await mutate(
+  // //       addMeasure(newMeasure, allUserMeasures),
+  // //       addMeasureOptions(newMeasure, allUserMeasures)
+  // //     )
 
-      toast({
-        title: "Success!",
-        description: "Your measure has been added.",
-      })
-    } catch (err) {
-      toast({
-        title: "Error!",
-        description: "There was a problem. Please, try again.",
-      })
-    }
-  }
+  // //     toast({
+  // //       title: "Success!",
+  // //       description: "Your measure has been added.",
+  // //     })
+  // //   } catch (err) {
+  // //     toast({
+  // //       title: "Error!",
+  // //       description: "There was a problem. Please, try again.",
+  // //     })
+  // //   }
+  // // }
 
   return (
     <div className="grid gap-4">
-      <LatestMeasure
+      {/* <LatestMeasure
         allUserMeasures={allUserMeasures}
         addMeasureMutation={addMeasureMutation}
       />
-      <RecentMeasures allUserMeasures={allUserMeasures} />
+      <RecentMeasures allUserMeasures={allUserMeasures} /> */}
       {/* <DataViz recentMeasures={allUserMeasures.slice(-10)} /> */}
     </div>
   )
