@@ -23,7 +23,8 @@ export const OverviewPage = () => {
     error,
     mutate,
   } = useSWR(cacheKey, getAllUserMeasures, {
-    onSuccess: (data) => data.sort((a, b) => a.measureTime - b.measureTime),
+    onSuccess: (data) =>
+      data.sort((a: any, b: any) => a.measureTime - b.measureTime),
   })
 
   const { toast } = useToast()
