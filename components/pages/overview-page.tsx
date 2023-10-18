@@ -11,9 +11,7 @@ import {
 } from "@/lib/api"
 import { type Measure } from "@/lib/db/schema"
 import { useToast } from "@/components/ui/use-toast"
-import { DataViz } from "@/components/dashboard/overview/data-viz"
 import { LatestMeasure } from "@/components/dashboard/overview/latest-measure"
-import { OverviewPageSkeleton } from "@/components/dashboard/overview/overview-page-skeleton"
 import { RecentMeasures } from "@/components/dashboard/overview/recent-measures"
 
 preload(cacheKey, getAllUserMeasures)
