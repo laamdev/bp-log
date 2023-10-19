@@ -19,7 +19,7 @@ import {
 
 export const WelcomeCard = () => {
   return (
-    <Card className="mx-auto w-full max-w-md border-0">
+    <Card className="border-0">
       <CardHeader className="space-y-1">
         <CardTitle className="mb-4 text-5xl font-bold">BP Log</CardTitle>
         <CardDescription>

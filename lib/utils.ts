@@ -20,3 +20,11 @@ export const checkEnvironment = () => {
 
   return base_url
 }
+
+export const calculateMap = (sys: number, dia: number) => {
+  return 2 * sys + dia / 3
+}
+
+export const calculatePp = (sys: number, dia: number) => {
+  return sys - dia
+}

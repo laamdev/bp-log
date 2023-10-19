@@ -28,9 +28,11 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.mdx",
     ".next/types/**/*.ts",
     "drizzle.config.js",
-    "lib/actions"
+    "lib/actions",
+    "app/articles/guidelines/page.msx"
   ],
   "exclude": ["node_modules"]
 }
