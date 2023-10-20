@@ -31,8 +31,7 @@
     "**/*.mdx",
     ".next/types/**/*.ts",
     "drizzle.config.js",
-    "lib/actions",
-    "app/articles/guidelines/page.msx"
+    "lib/actions"
   ],
   "exclude": ["node_modules"]
 }

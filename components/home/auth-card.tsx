@@ -17,7 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-export const WelcomeCard = () => {
+export const AuthCard = () => {
   return (
     <Card className="border-0">
       <CardHeader className="space-y-1">

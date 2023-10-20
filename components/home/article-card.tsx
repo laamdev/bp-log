@@ -1,12 +1,27 @@
 import Link from "next/link"
 
-export const ArticleCard = ({ label, url }: { label: string; url: string }) => {
+import { LottieAnimation } from "@/components/home/lottie-animation"
+
+export const ArticleCard = ({
+  label,
+  url,
+  animation,
+}: {
+  label: string
+  url: string
+  animation: any
+}) => {
   return (
     <Link
       href={url}
-      className="bg-primary text-primary-foreground flex items-center justify-center rounded-xl p-4 shadow"
+      className="bg-primary text-primary-foreground flex flex-col items-center justify-center rounded-xl p-4 shadow"
     >
-      <h3 className="text-center text-2xl font-semibold">{label}</h3>
+      <div className="bg-primary flex w-24 items-center justify-center md:w-32">
+        <LottieAnimation animation={animation} />
+      </div>
+      <h3 className="mt-2 text-center text-lg font-semibold md:text-2xl">
+        {label}
+      </h3>
     </Link>
   )
 }
