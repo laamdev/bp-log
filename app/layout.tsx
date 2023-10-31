@@ -140,7 +140,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             )}
           >
             <SiteHeader />
-            <div className="mx-8 flex-1 py-8">{children}</div>
+            <div className="flex-1 py-8">{children}</div>
           </div>
         </Providers>
       </body>

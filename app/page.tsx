@@ -13,7 +13,7 @@ export default function HomeRoute() {
     <div className="grid gap-12">
       <div className="grid gap-4 md:grid-cols-2">
         <AuthCard />
-        <FactSheetCard />
+        {/* <FactSheetCard /> */}
       </div>
 
       <section>

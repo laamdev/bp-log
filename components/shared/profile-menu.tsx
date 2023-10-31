@@ -52,7 +52,7 @@ export const ProfileMenu = async () => {
 
       <SignedOut>
         <DropdownMenuTrigger asChild>
-          <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-full p-2">
+          <div className="bg-primary text-primary-foreground flex h-8 w-8 cursor-pointer items-center justify-center rounded-full p-2">
             <MenuIcon className="h-4 w-4" />
           </div>
         </DropdownMenuTrigger>

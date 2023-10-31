@@ -9,7 +9,7 @@ export function ThemeToggle() {
   const { setTheme, theme } = useTheme()
 
   return (
-    <div className="fixed bottom-1 right-1 z-50 flex items-center justify-center">
+    <div className="fixed bottom-2 right-2 z-50 flex items-center justify-center">
       <Button
         size="icon"
         onClick={() => setTheme(theme === "light" ? "dark" : "light")}

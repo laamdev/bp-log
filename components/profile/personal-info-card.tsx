@@ -3,7 +3,6 @@ import { User } from "@clerk/nextjs/dist/types/server"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -11,7 +10,7 @@ import {
 
 export const PersonalInfoCard = ({ user }: { user: User }) => {
   return (
-    <Card className="bg-secondary text-secondary-foreground">
+    <Card>
       <CardHeader>
         <div className="flex items-center gap-x-4">
           <Avatar className="h-16 w-16 md:h-24 md:w-24">
