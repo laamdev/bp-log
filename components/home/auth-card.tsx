@@ -24,13 +24,13 @@ export const AuthCard = () => {
         <CardTitle className="mb-4 text-5xl font-bold">BP Log</CardTitle>
         <CardDescription>
           <SignedIn>
-            Sing up or log in to keep a log of your daily blood preassure
-            readings.
+            {`Go to your dashboard to see your blood preassure overview, measures
+            history and medication tracking.`}
           </SignedIn>
 
           <SignedOut>
-            Go to your dashboard to see your blood preassure overview, measures
-            history and medication tracking.
+            {`Log in or sign up to keep a log of your daily blood preassure
+            readings and track your medication intake.`}
           </SignedOut>
         </CardDescription>
       </CardHeader>

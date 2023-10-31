@@ -9,7 +9,7 @@ export const ArticleCard = ({
 }: {
   label: string
   url: string
-  animation: any
+  animation: string
 }) => {
   return (
     <Link
