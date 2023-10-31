@@ -1,5 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-const config = {
+
+import type { Config } from "tailwindcss"
+import { fontFamily } from "tailwindcss/defaultTheme"
+
+const config: Config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -16,6 +20,10 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-aeonikSans)", ...fontFamily.sans],
+        mono: ["var(--font-aeonikMono)", ...fontFamily.mono],
+      },
       colors: {
         border: "var(--border)",
         input: "var(--input)",
@@ -62,12 +70,12 @@ const config = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: "0" },
         },
       },
       animation: {

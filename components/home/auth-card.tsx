@@ -44,12 +44,19 @@ export const AuthCard = () => {
               <LayoutDashboardIcon className="mr-2 h-4 w-4" />
               Dashboard
             </Link>
-            <SignOutButton>
-              <div className={cn(buttonVariants({ variant: "secondary" }))}>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </div>
-            </SignOutButton>
+            <div
+              className={cn(
+                buttonVariants({ variant: "secondary" }),
+                "cursor-pointer"
+              )}
+            >
+              <SignOutButton>
+                <div className="flex w-full items-center justify-center">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </div>
+              </SignOutButton>
+            </div>
           </SignedIn>
           <SignedOut>
             <Link

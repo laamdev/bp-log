@@ -8,7 +8,7 @@ import { AuthCard } from "@/components/home/auth-card"
 import { FactSheetCard } from "@/components/home/fact-sheet-card"
 import { SectionHeading } from "@/components/shared/section-heading"
 
-export default function HomePage() {
+export default function HomeRoute() {
   return (
     <div className="grid gap-12">
       <div className="grid gap-4 md:grid-cols-2">

@@ -1,6 +1,6 @@
 "use client"
 
-import { startTransition } from "react"
+// // import { startTransition } from "react"
 import Link from "next/link"
 import { ColumnDef } from "@tanstack/react-table"
 import { format, parseISO } from "date-fns"
@@ -189,7 +189,15 @@ export const columns: ColumnDef<Measure>[] = [
             <DropdownMenuItem
               onClick={() =>
                 navigator.clipboard.writeText(
-                  `Date: ${measure.measureTime} | Systolic: ${measure.sys} | Diastolic: ${measure.dia} | Pulse Preassure: ${measure.pp} | Pulse: ${measure.pul} | Irregularity: ${measure.af}`
+                  `Date: ${format(
+                    new Date(`${measure.measureTime}`),
+                    "MMM dd 'at' h:mma"
+                  )}
+                  | Systolic: ${measure.sys} | Diastolic: ${
+                    measure.dia
+                  } | Pulse Preassure: ${measure.pp} | Pulse: ${
+                    measure.pul
+                  } | Irregularity: ${measure.af}`
                 )
               }
             >
@@ -197,19 +205,20 @@ export const columns: ColumnDef<Measure>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href={`/dashboard/history/${measure.id}`}>
+              <Link href={`/dashboard/history/${measure.id}/edit`}>
                 Edit measure
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => {
-                startTransition(() => {
-                  deleteMeasure(measure.id)
-                  // setOpen(false)
-                })
-              }}
+            // // onClick={() => {
+            // //   startTransition(() => {
+            // //     deleteMeasure(measure.id)
+            // //   })
+            // // }}
             >
-              Delete measure
+              <Link href={`/dashboard/history/${measure.id}/delete`}>
+                Delete measure
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

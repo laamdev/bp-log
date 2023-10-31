@@ -6,10 +6,6 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter"
 
 const nextConfig = {
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
-  experimental: {
-    serverActions: true,
-    mdxRs: true,
-  },
   images: {
     remotePatterns: [
       {

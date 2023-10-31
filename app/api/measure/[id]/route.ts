@@ -36,7 +36,6 @@ export async function PUT(request: Request) {
 
   try {
     const { editedMeasure, measureId } = await request.json()
-    console.log(editedMeasure)
     await db
       .update(MeasuresTable)
       .set(editedMeasure)

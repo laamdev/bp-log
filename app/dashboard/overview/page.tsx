@@ -1,20 +1,18 @@
 import { Metadata } from "next"
-import { auth } from "@clerk/nextjs"
 
-import { OverviewPage } from "@/components/pages/overview-page"
+import { LatestMeasureSection } from "@/components/dashboard/overview/latest-measure/latest-measure-section"
+import { RecentMeasuresSection } from "@/components/dashboard/overview/recent-measures/recent-measures-section"
 
 export const metadata: Metadata = {
   title: "Overview",
 }
 
 export default async function OverviewRoute() {
-  const { userId } = auth()
+  return (
+    <div className="grid gap-4">
+      <LatestMeasureSection />
 
-  if (!userId) return <div>Not authorized...</div>
-
-  return <OverviewPage />
+      <RecentMeasuresSection />
+    </div>
+  )
 }
-
-// // export const revalidate = 10
-// // export const runtime = "edge" // nodejs
-// // export const preferredRegion = "fra1"

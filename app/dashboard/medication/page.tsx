@@ -1,37 +1,61 @@
 import { Metadata } from "next"
 import { auth } from "@clerk/nextjs"
-import { asc, eq } from "drizzle-orm"
+import { PillIcon } from "lucide-react"
 
-import { db } from "@/lib/db"
-import { MedicationsTable } from "@/lib/db/schema"
-import { MedicationPage } from "@/components/pages/medication-page"
+import { fetchAllMedications, fetchMedicationsCount } from "@/lib/data"
+import { AddMedicationDialog } from "@/components/forms-and-dialogs/add-medication-dialog"
+import { MedicationCard } from "@/components/medication/medication-card"
+import { SectionHeading } from "@/components/shared/section-heading"
+import { Tagline } from "@/components/shared/tagline"
 
 export const metadata: Metadata = {
   title: "Medication",
 }
 
-const getUserMedications = async () => {
-  const { userId } = auth()
-
-  const res = await db
-    .select()
-    .from(MedicationsTable)
-    .where(eq(MedicationsTable.userId, userId as string))
-    .orderBy(asc(MedicationsTable))
-
-  if (!res) {
-    throw new Error("Failed to fetch data")
-  }
-
-  return res
-}
-
 export default async function MedicationRoute() {
   const { userId } = await auth()
 
-  if (!userId) return <div>Not Authorized</div>
+  if (!userId) {
+    return
+  }
 
-  const data = await getUserMedications()
+  const allMedicationsData = fetchAllMedications(userId)
+  const medicationsCountData = fetchMedicationsCount(userId)
 
-  return <MedicationPage allUserMedications={data} />
+  const [allMedications, medicationsCount] = await Promise.all([
+    allMedicationsData,
+    medicationsCountData,
+  ])
+
+  return (
+    <div className="bg-card rounded-xl p-4">
+      <div className="flex flex-col justify-between gap-y-2 md:flex-row md:gap-y-0">
+        <div>
+          <SectionHeading>Your Medications</SectionHeading>
+          {allMedications && medicationsCount ? (
+            <Tagline icon={<PillIcon className="h-4 w-4" />}>
+              {`${medicationsCount == 0 ? "No" : medicationsCount} ${`${
+                medicationsCount > 1 ? "medications" : "medication"
+              }`}
+            `}
+            </Tagline>
+          ) : null}
+        </div>
+        <AddMedicationDialog />
+      </div>
+
+      {medicationsCount == 0 ? (
+        <p className="text-muted-foreground mt-8 text-center">
+          {`You have no medications logged. Please add one with the above
+      button.`}
+        </p>
+      ) : (
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          {allMedications.map((medication) => (
+            <MedicationCard medication={medication} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
 }

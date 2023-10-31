@@ -1,5 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
-import { differenceInYears, parse, parseISO } from "date-fns"
+import { differenceInYears, format, parse, parseISO } from "date-fns"
 import { twMerge } from "tailwind-merge"
 
 export const cn = (...inputs: ClassValue[]) => {
@@ -27,4 +27,12 @@ export const calculateMap = (sys: number, dia: number) => {
 
 export const calculatePp = (sys: number, dia: number) => {
   return sys - dia
+}
+
+export const now = format(new Date(), "yyyy-MM-dd'T'HH:mm")
+
+export const dateFormatter = (rawDate: string) => {
+  const formattedDate = format(new Date(rawDate), "MMM dd 'at' h:mma")
+
+  return formattedDate
 }

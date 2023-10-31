@@ -16,7 +16,7 @@ export const ArticleCard = ({
       href={url}
       className="bg-primary text-primary-foreground flex flex-col items-center justify-center rounded-xl p-4 shadow"
     >
-      <div className="bg-primary flex w-24 items-center justify-center md:w-32">
+      <div className="relative flex h-24 w-24 items-center justify-center md:h-32 md:w-32">
         <LottieAnimation animation={animation} />
       </div>
       <h3 className="mt-2 text-center text-lg font-semibold md:text-2xl">

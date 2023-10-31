@@ -3,7 +3,7 @@ import type { User } from "@clerk/nextjs/api"
 import { differenceInCalendarYears, parseISO } from "date-fns"
 
 import { calculateAge } from "@/lib/utils"
-import { UpdateProfileDialog } from "@/components/forms/update-profile-dialog"
+import { UpdateProfileDialog } from "@/components/forms-and-dialogs/update-profile-dialog"
 import { AgeCard } from "@/components/profile/age-card"
 import { DetailsCard } from "@/components/profile/details-card"
 import { PersonalInfoCard } from "@/components/profile/personal-info-card"
