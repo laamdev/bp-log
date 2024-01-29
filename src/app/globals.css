@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @layer base {
+    :root {
+      --background: #cfc9bc;
+      --foreground: #111111;
+
+      --card: #f3f1ee;
+      --card-foreground: #000000;
+
+      /* --popover: #0c0a09; */
+      --popover: #494343;
+      --popover-foreground: #ffffff;
+
+      --primary: #11190c;
+      --primary-foreground: #e6ff03;
+
+      --secondary: #ffffff;
+      --secondary-foreground: #11190c;
+
+      --muted: #e6ff03;
+      --muted-foreground: #11190c;
+
+      --accent: #e6ff03;
+      --accent-foreground: #11190c;
+
+      --destructive: #ef4444;
+      --destructive-foreground: #fafaf9;
+
+      --dialog: #ffffff;
+      --dialog-foreground: #000000;
+
+      --border: #11190c;
+      --input: #11190c;
+      --ring: #e6ff03;
+
+      --radius: 1rem;
+    }
+
+    .dark {
+      --background: #11190c;
+      --foreground: #ffffff;
+
+      --card: #f3f1ee;
+      --card-foreground: #000000;
+
+      --popover: #494343;
+      --popover-foreground: #ffffff;
+
+      --primary: #11190c;
+      --primary-foreground: #e6ff03;
+
+      --secondary: #ffffff;
+      --secondary-foreground: #11190c;
+
+      --muted: #e6ff03;
+      --muted-foreground: #11190c;
+
+      --accent: #e6ff03;
+      --accent-foreground: #11190c;
+
+      --destructive: #7f1d1d;
+      --destructive-foreground: #fafaf9;
+
+      --dialog: #262626;
+      --dialog-foreground: #ffffff;
+
+      --border: #11190c;
+      --input: #11190c;
+      /* --input: #d3d3d3; */
+      --ring: #e6ff03;
+    }
+  }
+}
+
+@layer base {
+  ::selection {
+    background: var(--accent);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply overflow-x-hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground overflow-x-hidden;
+  }
+
+  .tw-transition {
+    @apply transition-all duration-100 ease-linear;
+  }
+}
+
+/* 'satin-linen': {
+  '50': '#f8f7f2',
+  '100': '#eae7db',
+  '200': '#d3cdb4',
+  '300': '#bcb18d',
+  '400': '#ad9c72',
+  '500': '#a08860',
+  '600': '#8c7253',
+  '700': '#765b47',
+  '800': '#624c3e',
+  '900': '#524035',
+  '950': '#2d211b',
+}, */
+
+/* 'woodsmoke': {
+  '50': '#f8f7f7',
+  '100': '#f0eeee',
+  '200': '#dddada',
+  '300': '#bfbabb',
+  '400': '#9c9495',
+  '500': '#807778',
+  '600': '#696061',
+  '700': '#564e4e',
+  '800': '#494343',
+  '900': '#3f3b3c',
+  '950': '#1d1b1b',
+}, */
